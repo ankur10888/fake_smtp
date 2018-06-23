@@ -40,7 +40,8 @@ public abstract class MessageSender {
                 sendError(errorMessages);
             }
         } catch (Exception ex) {
-            // TODO Handle exception
+            // Since the error is handled gracefully by prompting error
+            // On console, skip rethrowing
             ex.printStackTrace();
         }
     }
