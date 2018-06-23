@@ -40,8 +40,7 @@ public abstract class MessageSender {
                 sendError(errorMessages);
             }
         } catch (Exception ex) {
-            // TODO Handle exception
-            ex.printStackTrace();
+            throw new RuntimeException(ex);
         }
     }
 
@@ -62,7 +61,7 @@ public abstract class MessageSender {
         }
     }
 
-    private void sendError(List<String> messages) throws IOException {
+    private void sendError(List<String> messages) {
         messages.forEach(this::writeToConsole);
     }
 
