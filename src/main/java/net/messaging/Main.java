@@ -1,5 +1,8 @@
 package net.messaging;
 
+import net.messaging.domain.Message;
+import net.messaging.smtp.SmtpMessageSender;
+
 import java.io.*;
 
 public class Main {
@@ -15,5 +18,9 @@ public class Main {
     }
 
     public static void main(String... args) {
+        Message message = new Message(args[0], args[1]);
+        MessageSender messageSender = new SmtpMessageSender(network, console);
+
+        messageSender.sendMessage(message);
     }
 }
