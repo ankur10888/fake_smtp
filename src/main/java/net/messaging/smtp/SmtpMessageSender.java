@@ -1,6 +1,7 @@
 package net.messaging.smtp;
 
 import net.messaging.MessageSender;
+import net.messaging.MessageValidator;
 import net.messaging.domain.Message;
 
 import java.io.IOException;
@@ -8,11 +9,8 @@ import java.io.Writer;
 
 public class SmtpMessageSender extends MessageSender {
 
-    private static final String LINE_BREAK = "\n";
-
-
-    public SmtpMessageSender(Writer networkWriter, Writer conole) {
-        super(networkWriter, conole);
+    public SmtpMessageSender(Writer networkWriter, Writer conole, MessageValidator messageValidator) {
+        super(networkWriter, conole, messageValidator);
     }
 
     @Override
