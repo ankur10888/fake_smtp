@@ -17,9 +17,9 @@ public class MessageValidator {
                 .filter(recipient -> !recipient.contains("@"))
                 .collect(Collectors.toList());
 
-        if(!invalidRecipients.isEmpty()) {
+        if (!invalidRecipients.isEmpty()) {
 
-            if(invalidRecipients.size() == 1) {
+            if (invalidRecipients.size() == 1) {
                 errorMessages.add(String.format("Invalid email address: %s\n", invalidRecipients.get(0)));
             } else {
                 errorMessages.add("Invalid email addresses: " + String.join(" ", invalidRecipients) + "\n");

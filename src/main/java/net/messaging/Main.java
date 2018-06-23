@@ -1,14 +1,15 @@
 package net.messaging;
 
 import net.messaging.domain.Message;
-import net.messaging.smtp.SmtpMessageSender;
 
 import java.io.Writer;
 
 public class Main {
     private static Writer network;
     private static Writer console;
+
     private static MessageValidator messageValidator = new MessageValidator();
+    private static MessageParser messageParser = new MessageParser();
 
     public static void setNetwork(Writer network) {
         Main.network = network;
@@ -19,8 +20,10 @@ public class Main {
     }
 
     public static void main(String... args) {
-        Message message = new Message(args[0], args[1]);
-        MessageSender messageSender = new SmtpMessageSender(network, console, messageValidator);
+        Message message = messageParser.parseMessage(args);
+
+        MessageSender messageSender = MessageSender
+                .getSenderFor(message.getMessageType(), network, console, messageValidator);
 
         messageSender.sendMessage(message);
     }

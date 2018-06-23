@@ -72,7 +72,7 @@ public class EndToEndTest {
         consoleShouldReceive("Invalid email addresses: sallyatexample.com joeateasmple.com\n");
     }
 
-    @Ignore @Test public void sendAMessageInAnotherFormat_story6() {
+     @Test public void sendAMessageInAnotherFormat_story6() {
         Main.main("-im", "leslie@chat.example.com", ":-) hey there!");
         networkShouldReceive("connect chat\n" +
                 "<leslie@chat.example.com>(:-) hey there!)\n" +
@@ -80,7 +80,7 @@ public class EndToEndTest {
         consoleShouldReceive(NO_OUTPUT);
     }
 
-    @Ignore @Test public void chatsToMultipleAddressesGetSentIndividually_story7() {
+     @Test public void chatsToMultipleAddressesGetSentIndividually_story7() {
         Main.main("-im", "leslie@chat.example.com,joey@chat.example.com", "Hello.");
         networkShouldReceive("connect chat\n" +
                 "<leslie@chat.example.com>(Hello.)\n" +

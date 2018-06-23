@@ -4,7 +4,6 @@ import net.messaging.MessageSender;
 import net.messaging.MessageValidator;
 import net.messaging.domain.Message;
 
-import java.io.IOException;
 import java.io.Writer;
 
 public class SmtpMessageSender extends MessageSender {
@@ -14,17 +13,17 @@ public class SmtpMessageSender extends MessageSender {
     }
 
     @Override
-    public void doSendMessage(Message message) throws IOException {
+    public void doSendMessage(Message message) {
         initializeSmtpConnection();
         deliverMessage(message);
         disconnect();
     }
 
-    private void disconnect() throws IOException {
+    private void disconnect() {
         writeToNetwork("disconnect\n");
     }
 
-    private void deliverMessage(Message message) throws IOException {
+    private void deliverMessage(Message message) {
         message.getRecipients()
                 .forEach(recipient ->
                         writeToNetwork(String.format("To: %s\n", recipient)));
@@ -35,7 +34,7 @@ public class SmtpMessageSender extends MessageSender {
         writeToNetwork(LINE_BREAK);
     }
 
-    private void initializeSmtpConnection() throws IOException {
+    private void initializeSmtpConnection() {
         writeToNetwork("connect smtp\n");
     }
 }

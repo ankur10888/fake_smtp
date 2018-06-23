@@ -1,6 +1,9 @@
 package net.messaging;
 
 import net.messaging.domain.Message;
+import net.messaging.domain.MessageType;
+import net.messaging.im.InstantMessageSender;
+import net.messaging.smtp.SmtpMessageSender;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -10,7 +13,7 @@ public abstract class MessageSender {
 
     protected static final String LINE_BREAK = "\n";
 
-    protected Writer networkWriter;
+    private Writer networkWriter;
     private Writer console;
     private MessageValidator messageValidator;
 
@@ -18,6 +21,14 @@ public abstract class MessageSender {
         this.networkWriter = networkWriter;
         this.console = console;
         this.messageValidator = messageValidator;
+    }
+
+    public static MessageSender getSenderFor(MessageType messageType, Writer networkWriter, Writer console, MessageValidator messageValidator) {
+        if (messageType == MessageType.EMAIL) {
+            return new SmtpMessageSender(networkWriter, console, messageValidator);
+        } else {
+            return new InstantMessageSender(networkWriter, console, messageValidator);
+        }
     }
 
     public void sendMessage(Message message) {
