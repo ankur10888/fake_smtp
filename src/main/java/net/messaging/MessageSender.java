@@ -4,6 +4,7 @@ import net.messaging.domain.Message;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.util.List;
 
 public abstract class MessageSender {
 
@@ -20,11 +21,12 @@ public abstract class MessageSender {
     }
 
     public void sendMessage(Message message) {
+        List<String> errorMessages = messageValidator.validate(message);
         try {
-            if (messageValidator.isValid(message)) {
+            if (errorMessages.isEmpty()) {
                 doSendMessage(message);
             } else {
-                sendError(message);
+                sendError(errorMessages);
             }
         } catch (Exception ex) {
             // TODO Handle exception
@@ -32,8 +34,16 @@ public abstract class MessageSender {
         }
     }
 
-    private void sendError(Message message) throws IOException {
-        console.write(String.format("Invalid email address: %s%s", message.getRecipient(), LINE_BREAK));
+    private void writeToConsole(String error) {
+        try {
+            console.write(error);
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    private void sendError(List<String> messages) throws IOException {
+        messages.forEach(this::writeToConsole);
     }
 
     protected abstract void doSendMessage(Message message) throws IOException;

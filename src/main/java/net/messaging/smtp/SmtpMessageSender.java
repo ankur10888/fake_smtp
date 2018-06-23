@@ -9,8 +9,8 @@ import java.io.Writer;
 
 public class SmtpMessageSender extends MessageSender {
 
-    public SmtpMessageSender(Writer networkWriter, Writer conole, MessageValidator messageValidator) {
-        super(networkWriter, conole, messageValidator);
+    public SmtpMessageSender(Writer networkWriter, Writer console, MessageValidator messageValidator) {
+        super(networkWriter, console, messageValidator);
     }
 
     @Override
