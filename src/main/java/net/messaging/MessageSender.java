@@ -57,6 +57,7 @@ public abstract class MessageSender {
         try {
             networkWriter.write(message);
         } catch (IOException ex) {
+            writeToConsole("Connection error. Please try again.\n");
             throw new RuntimeException(ex);
         }
     }
