@@ -11,11 +11,11 @@ public class MessageValidator {
     public List<String> validate(Message message) {
         List<String> errorMessages = new LinkedList<>();
 
-        if (message.getRecipient() == null) {
-            errorMessages.add(String.format("Invalid email address: %s\n", message.getRecipient()));
-        } else if (!message.getRecipient().contains("@")) {
-            errorMessages.add(String.format("Invalid email address: %s\n", message.getRecipient()));
-        }
+        message.getRecipients()
+                .stream()
+                .filter(recipient -> !recipient.contains("@"))
+                .forEach(recipient ->
+                        errorMessages.add(String.format("Invalid email address: %s\n", recipient)));
 
         if (message.getMessage() == null || message.getMessage().trim().isEmpty()) {
             errorMessages.add("Cannot send an email with no body.\n");

@@ -42,6 +42,14 @@ public abstract class MessageSender {
         }
     }
 
+    protected void writeToNetwork(String message) {
+        try {
+            networkWriter.write(message);
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
     private void sendError(List<String> messages) throws IOException {
         messages.forEach(this::writeToConsole);
     }

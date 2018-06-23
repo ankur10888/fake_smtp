@@ -21,18 +21,21 @@ public class SmtpMessageSender extends MessageSender {
     }
 
     private void disconnect() throws IOException {
-        networkWriter.write("disconnect\n");
+        writeToNetwork("disconnect\n");
     }
 
     private void deliverMessage(Message message) throws IOException {
-        networkWriter.write(String.format("To: %s\n", message.getRecipient()));
-        networkWriter.write(LINE_BREAK);
+        message.getRecipients()
+                .forEach(recipient ->
+                        writeToNetwork(String.format("To: %s\n", recipient)));
+
+        writeToNetwork(LINE_BREAK);
         //Add line break to message
-        networkWriter.write(message.getMessage() + LINE_BREAK);
-        networkWriter.write(LINE_BREAK);
+        writeToNetwork(message.getMessage() + LINE_BREAK);
+        writeToNetwork(LINE_BREAK);
     }
 
     private void initializeSmtpConnection() throws IOException {
-        networkWriter.write("connect smtp\n");
+        writeToNetwork("connect smtp\n");
     }
 }
